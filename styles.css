@@ -143,11 +143,22 @@ body > h1 {
     justify-self: flex-start;
 }
 
-.book-card > button {
+.rmv-book-btn {
+    grid-area: 2/2/3/3;
     width: 20px;
     height: 20px;
     align-self: flex-end;
     justify-self: flex-end;
+    border: none;
+    border-radius: 5px;
+}
+
+.read-button {
+    grid-area: 2/2/3/3;
+    width: 20px;
+    height: 20px;
+    align-self: flex-end;
+    justify-self: flex-start;
     border: none;
     border-radius: 5px;
 }

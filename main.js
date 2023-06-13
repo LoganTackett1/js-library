@@ -10,27 +10,30 @@ function Book(title,author,pages,read) {
     this.uuid = Math.floor(Math.random()*1000000),
     this.card = document.createElement("div");
     this.card.className = "book-card";
+    let txt;
+    let color;
+    if (this.read == "on") {
+        txt = "read";
+        color = "green";
+    } else {
+        txt = "not read";
+        color = "red";
+    }
     this.card.innerHTML = `
     <img src="" alt="${title+' cover image.'}">
     <h1>${title}</h1>
+    <button type="button" class="read-button rr${this.uuid}" onclick="toggleRead(${this.uuid});" style="background-color: ${color}">${txt}</button>
     <button type="button" class="rmv-book-btn" onclick="removeBook(${this.uuid});">X</button>
     `;
 }
 
-Book.prototype.toggleRead = () => {
-    this.read = !this.read;
-}
-
-Book.prototype.removeSelf = () => {
-    let index = 0;
-    for (let item of myLibrary) {
-        if (item.uuid == this.uuid) {
-            myLibrary.splice(index,1);
-        } else {
-            index += 1;
+Book.prototype.removeSelf = function() {
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].uuid == this.uuid) {
+            myLibrary.splice(i,1);
+            return;
         }
     }
-    myLibrary.splice(index,1);
 }
 
 function addBook(title,author,pages,read) {
@@ -108,4 +111,22 @@ function removeBook(uuid) {
     let x = getByUUID(uuid,myLibrary);
     shelf.removeChild(x.card);
     x.removeSelf();
+}
+
+function toggleRead(uuid) {
+    let x = getByUUID(uuid,myLibrary);
+    if (x.read == "on") {
+        x.read = "off";
+    } else {
+        x.read = "on";
+    }
+    const readBtn = document.querySelector(`.rr${uuid}`);
+    if (x.read == "on") {
+        readBtn.textContent = "read";
+        readBtn.style.backgroundColor = "green";
+    } else {
+        readBtn.textContent = "not read";
+        readBtn.style.backgroundColor = "red";
+    }
+    console.log(readBtn);
 }
