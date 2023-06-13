@@ -1,17 +1,19 @@
 let myLibrary = [];
 
+const shelf = document.querySelector(".shelf");
+
 function Book(title,author,pages,read) {
     this.title = title,
     this.author = author,
     this.pages = pages,
     this.read = read,
-    this.uuid = Math.floor(Math.random()*10000),
+    this.uuid = Math.floor(Math.random()*1000000),
     this.card = document.createElement("div");
     this.card.className = "book-card";
     this.card.innerHTML = `
     <img src="" alt="${title+' cover image.'}">
     <h1>${title}</h1>
-    <button type="button" class="rmv-book-btn" onclick="removeBook(${this.uuid});">Trash</button>
+    <button type="button" class="rmv-book-btn" onclick="removeBook(${this.uuid});">X</button>
     `;
 }
 
@@ -28,13 +30,13 @@ Book.prototype.removeSelf = () => {
             index += 1;
         }
     }
-    myLibrary.splice(this.index,1);
+    myLibrary.splice(index,1);
 }
 
 function addBook(title,author,pages,read) {
     let x = new Book(title,author,pages,read);
     myLibrary.push(x);
-    document.body.appendChild(x.card);
+    shelf.appendChild(x.card);
 }
 
 const newBookForm = document.createElement("form");
@@ -44,7 +46,6 @@ newBookForm.style.top = "20%";
 newBookForm.style.bottom = "20%";
 newBookForm.style.left = "20%";
 newBookForm.style.right = "20%";
-newBookForm.style.backgroundColor = "grey";
 newBookForm.className = "new-book-form";
 
 newBookForm.innerHTML = `
@@ -78,8 +79,6 @@ newBookBtn[0].addEventListener('click', e => {
 let submitBtn;
 let closeBtn;
 
-getFormData = (selector) => Object.fromEntries(new FormData(document.querySelector(selector)))
-
 function addBookForm() {
     document.body.appendChild(newBookForm);
     submitBtn = document.getElementsByClassName("submit-form");
@@ -107,6 +106,6 @@ function getByUUID(uuid, object) {
 
 function removeBook(uuid) {
     let x = getByUUID(uuid,myLibrary);
-    document.body.removeChild(x.card);
+    shelf.removeChild(x.card);
     x.removeSelf();
 }
