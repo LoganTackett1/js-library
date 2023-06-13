@@ -56,23 +56,28 @@ newBookForm.innerHTML = `
     <h1>New Book:</h1>
     <div>
         <label for="title">Title:</label>
-        <input type="text" name="title" id="title">
+        <input required type="text" name="title" id="title">
     </div>
     <div>
         <label for="author">Author:</label>
-        <input type="text" name="author" id="author">
+        <input required type="text" name="author" id="author">
     </div>
     <div>
         <label for="pages">Pages:</label>
-        <input type="number" name="pages" id="pages">
+        <input required type="number" name="pages" id="pages">
     </div>
     <span>
         <label for="read">I've read this before</label>
         <input type="checkbox" name="read" id="read">
     </span>
-    <button type="button" class="submit-form" onclick="formSubmitter()">Submit</button>
+    <button type="submit" class="submit-form">Submit</button>
 </div>
 <button type="button" class="close-form" onclick="closeBookForm()">X</button>`;
+
+newBookForm.addEventListener('submit', e => {
+    e.preventDefault();
+    formSubmitter();
+})
 
 const newBookBtn = document.getElementsByClassName("new-book");
 newBookBtn[0].addEventListener('click', e => {
