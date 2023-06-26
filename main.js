@@ -2,39 +2,43 @@ let myLibrary = [];
 
 const shelf = document.querySelector(".shelf");
 
-function Book(title,author,pages,read) {
-    this.title = title,
-    this.author = author,
-    this.pages = pages,
-    this.read = read,
-    this.uuid = Math.floor(Math.random()*1000000),
-    this.card = document.createElement("div");
-    this.card.className = "book-card";
-    let txt;
-    let color;
-    if (this.read == "on") {
-        txt = "read";
-        color = "green";
-    } else {
-        txt = "not read";
-        color = "red";
-    }
-    this.card.innerHTML = `
-    <img src="" alt="${title+' cover image.'}">
-    <h1>${title}</h1>
-    <button type="button" class="read-button rr${this.uuid}" onclick="toggleRead(${this.uuid});" style="background-color: ${color}">${txt}</button>
-    <button type="button" class="rmv-book-btn" onclick="removeBook(${this.uuid});">X</button>
-    `;
-}
+class Book {
+    constructor (title,author,pages,read) {
+        this.title = title,
+        this.author = author,
+        this.pages = pages,
+        this.read = read,
+        this.uuid = Math.floor(Math.random()*1000000),
+        this.card = document.createElement("div");
+        this.card.className = "book-card";
 
-Book.prototype.removeSelf = function() {
-    for (let i = 0; i < myLibrary.length; i++) {
-        if (myLibrary[i].uuid == this.uuid) {
-            myLibrary.splice(i,1);
-            return;
+        let txt;
+        let color;
+        if (this.read == "on") {
+            txt = "read";
+            color = "green";
+        } else {
+            txt = "not read";
+            color = "red";
+        }
+        this.card.innerHTML = `
+            <img src="" alt="${title+' cover image.'}">
+            <h1>${title}</h1>
+            <button type="button" class="read-button rr${this.uuid}" onclick="toggleRead(${this.uuid});" style="background-color: ${color}">${txt}</button>
+            <button type="button" class="rmv-book-btn" onclick="removeBook(${this.uuid});">X</button>
+            `;
+    }
+    removeSelf () {
+        for (let i = 0; i < myLibrary.length; i++) {
+            if (myLibrary[i].uuid == this.uuid) {
+                myLibrary.splice(i,1);
+                return;
+            }
         }
     }
 }
+
+
 
 function addBook(title,author,pages,read) {
     let x = new Book(title,author,pages,read);
